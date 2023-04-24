@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
-import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import firebase from "firebase";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../auth.service";
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,10 @@ export class LoginComponent {
   userError: any;
 
 
-  constructor(public fb: FormBuilder) {
+  constructor(public fb: FormBuilder,
+              public authService: AuthService,
+              public router: Router) {
+
     this.loginForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required)
@@ -25,10 +30,11 @@ export class LoginComponent {
     let email: string = this.loginForm.value.email;
     let password: string = this.loginForm.value.password;
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    this.authService.login(email, password)
       .then((data) => {
         console.log(data);
         this.message = "You have been logged in successfully."
+        this.router.navigate(['/myblogs']);
 
       }).catch((error) => {
       console.log(error);

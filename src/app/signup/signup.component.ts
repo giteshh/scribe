@@ -9,9 +9,7 @@ import {
   Validators
 } from "@angular/forms";
 
-import firebase from 'firebase/app'
-import 'firebase/auth';
-import {last} from "rxjs";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-signup',
@@ -20,20 +18,23 @@ import {last} from "rxjs";
 })
 export class SignupComponent {
 
+  signUpForm: FormGroup;
   userError: any;
   message: string = "";
   options: AbstractControlOptions = {
     validators: this.checkIfMatchingPassword
   };
-  signUpForm = this.fb.group({
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-    confirmPassword: ['', [Validators.required]]
-  }, this.options)
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder,
+              public authService: AuthService) {
+    this.signUpForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]]
+    }, this.options)
 
   }
 
@@ -52,17 +53,9 @@ export class SignupComponent {
     let firstName: string = signUpForm.value.firstName;
     let lastName: string = signUpForm.value.lastName;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
-      console.log(response);
+    this.authService.signup(email, password, firstName, lastName).then(() => {
 
-      let randomNumber = Math.floor(Math.random() * 1000);
-
-      response.user?.updateProfile({
-        displayName: firstName + '' + lastName,
-        photoURL: "https://api.adorable.io/avatars" + randomNumber
-      }).then(() => {
-        this.message = "You have been signed up successfully. Please login."
-      })
+      this.message = "You have been signed up successfully. Please login."
     }).catch((error) => {
       console.log(error);
       this.userError = error;

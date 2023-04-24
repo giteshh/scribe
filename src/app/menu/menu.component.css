@@ -1,0 +1,17 @@
+.right {
+  float: right;
+}
+
+.collapse {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.btn {
+  border-radius: 30px;
+}
+
+nav {
+  border-bottom: 1px solid #6ca3f9;
+}
