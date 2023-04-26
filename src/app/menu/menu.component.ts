@@ -11,17 +11,17 @@ export class MenuComponent {
   user: any;
 
   constructor() {
-    this.user = firebase.auth().currentUser;
 
-    if (this.user) {
+    this.user = firebase.auth().currentUser;
+    if(this.user) {
       this.loggedIn = true;
     } else {
       this.loggedIn = false;
     }
 
     firebase.auth().onAuthStateChanged((user) => {
-
-      if (user) {
+      this.user = user;
+      if(user){
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
@@ -31,7 +31,10 @@ export class MenuComponent {
 
   }
 
-  logout() {
+  ngOnInit() {
+  }
+
+  logout(){
     firebase.auth().signOut();
   }
 }

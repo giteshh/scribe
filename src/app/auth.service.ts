@@ -6,32 +6,34 @@ import firebase from "firebase";
 })
 export class AuthService {
 
-  constructor() {
+  constructor() { }
+
+  login(email: string, password: string){
+    return firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
-  signup(firstName: string, lastName: string, email: string, password: string) {
-    return new Promise<void>((resolve, reject) => {
+  signup(email: string, password: string, first_name: string, last_name: string){
+    return new Promise((resolve, reject) => {
 
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((res) => {
+      firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
 
-          let randomNumber = Math.floor(Math.random() * 1000)
+        let randomNumber = Math.floor(Math.random() * 1000)
 
-          res.user?.updateProfile({
-            displayName: firstName + ' ' + lastName,
-            photoURL: "https://api.adorable.io/avatars/" + randomNumber
-          }).then(() => {
-            resolve();
-          }).catch((error) => {
-            reject(error);
-          })
+        response.user?.updateProfile({
+          displayName: first_name + " " + last_name,
+          photoURL: "https://robohash.org/" + randomNumber
+        }).then(() => {
+          resolve(response.user);
         }).catch((error) => {
+          reject(error);
+        })
+
+      }).catch((error) => {
         reject(error);
       })
+
     })
   }
 
-  login(email: string, password: string) {
-    return firebase.auth().signInWithEmailAndPassword(email, password);
-  }
 }
+

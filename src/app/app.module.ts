@@ -3,19 +3,26 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {SignupComponent} from './signup/signup.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import firebase from 'firebase/app';
-import { LoginComponent } from './login/login.component';
-import { CapitalizePipe } from './capitalize.pipe';
-import { HomeComponent } from './home/home.component';
-import { SalutationPipe } from './salutation.pipe'
+import {LoginComponent} from './login/login.component';
+import {CapitalizePipe} from './capitalize.pipe';
+import {HomeComponent} from './home/home.component';
+import {SalutationPipe} from './salutation.pipe'
 import {AuthService} from "./auth.service";
-import { AppRoutingModule } from './app-routing.module';
-import { MenuComponent } from './menu/menu.component';
-import { MyblogsComponent } from './myblogs/myblogs.component';
-import { ProfileComponent } from './profile/profile.component';
-
+import {AppRoutingModule} from './app-routing.module';
+import {MenuComponent} from './menu/menu.component';
+import {MyblogsComponent} from './myblogs/myblogs.component';
+import {ProfileComponent} from './profile/profile.component';
+import {CreateComponent} from './create/create.component';
+import {NgxEditorModule} from "ngx-editor";
+import {HttpClientModule} from "@angular/common/http";
+import {AngularEditorModule} from "@kolkov/angular-editor";
+import { PostComponent } from './post/post.component';
+import { ViewComponent } from './view/view.component';
+import { CommentsComponent } from './comments/comments.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 
 let firebaseConfig = {
@@ -41,12 +48,21 @@ firebase.initializeApp(firebaseConfig);
     SalutationPipe,
     MenuComponent,
     MyblogsComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreateComponent,
+    PostComponent,
+    ViewComponent,
+    CommentsComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxEditorModule,
+    HttpClientModule,
+    FormsModule,
+    AngularEditorModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
