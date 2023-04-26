@@ -4,10 +4,12 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: left bottom;
+  overflow-x: hidden;
 }
 
 .background-right {
   background-color: #2e7cf6;
+  overflow-x: hidden;
 }
 
 .card {

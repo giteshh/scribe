@@ -1,3 +1,6 @@
 .vertical-divider {
   border-right: 1px solid #ddd;
 }
+.row{
+  overflow-x: hidden;
+}
